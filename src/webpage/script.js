@@ -1,46 +1,94 @@
 document.addEventListener('DOMContentLoaded', () => {
     const parkingLotSelect = document.getElementById('parking-lot-select');
     const occupancyDisplay = document.getElementById('occupancy-display');
+    const occupiedSpotsList = document.getElementById('occupied-spots-list');
+
+    // Predefined data for each parking lot
+    const parkingData = {
+        1: `
+            parking_spot_id,vehicle_weight
+            1,0
+            2,2419
+            3,0
+            4,3452
+            5,0
+            6,2785
+            7,0
+            8,2291
+            9,0
+            10,0
+        `,
+        2: `
+            parking_spot_id,vehicle_weight
+            1,3450
+            2,0
+            3,0
+            4,2100
+            5,0
+            6,0
+            7,2900
+            8,0
+            9,3000
+            10,0
+        `,
+        3: `
+            parking_spot_id,vehicle_weight
+            1,0
+            2,0
+            3,0
+            4,4500
+            5,0
+            6,0
+            7,0
+            8,2300
+            9,0
+            10,0
+        `
+    };
 
     parkingLotSelect.addEventListener('change', (event) => {
         const selectedLot = event.target.value;
-        const data = {}; // Object to hold CSV data
 
-        // Fetch CSV data and populate the data object
-        fetch(`lot${selectedLot}_parking.csv`) // Updated to fetch the selected lot's CSV file
-            .then(response => response.text())
-            .then(csvText => {
-                const rows = csvText.split('\n').slice(1); // Skip the header row
-                rows.forEach(row => {
-                    const [spotId, vehicleWeight, parkingLotNumber] = row.split(','); // Parse all three values
-                    if (spotId && vehicleWeight && parkingLotNumber) {
-                        data[spotId] = {
-                            weight: parseInt(vehicleWeight, 10),
-                            lotNumber: parseInt(parkingLotNumber, 10)
-                        };
-                    }
-                });
+        // Clear previous results
+        occupancyDisplay.textContent = 'Calculating...';
+        occupiedSpotsList.innerHTML = '';
 
-                // Calculate occupancy percentage for the selected parking lot
-                let totalSpots = 0;
-                let occupiedSpots = 0;
+        if (!selectedLot || !parkingData[selectedLot]) {
+            occupancyDisplay.textContent = 'N/A - Please select a valid parking lot';
+            return;
+        }
 
-                for (let spotId = 1; spotId <= 500; spotId++) {
+        // Use the corresponding data for the selected parking lot
+        const csvText = parkingData[selectedLot];
+        const rows = csvText.trim().split('\n').slice(1); // Skip header row
+
+        let totalSpots = 0;
+        let occupiedSpots = 0;
+
+        rows.forEach(row => {
+            const [spotId, vehicleWeight] = row.split(',');
+            if (spotId && vehicleWeight) {
+                const weight = parseInt(vehicleWeight, 10);
+
+                if (!isNaN(weight)) {
                     totalSpots++;
-                    if (data[spotId] && data[spotId].weight > 0) {
+                    if (weight > 0) {
                         occupiedSpots++;
+                        // Add spot ID to the occupied spots list
+                        const listItem = document.createElement('li');
+                        listItem.textContent = `Spot ${spotId} is occupied.`;
+                        occupiedSpotsList.appendChild(listItem);
                     }
                 }
+            }
+        });
 
-                // Calculate occupancy percentage
-                const occupancyPercentage = (occupiedSpots / totalSpots) * 100;
-
-                // Display occupancy percentage
-                occupancyDisplay.textContent = `Occupancy Percentage for Lot ${selectedLot}: ${occupancyPercentage.toFixed(2)}%`;
-            })
-            .catch(error => {
-                console.error('Error fetching or processing CSV data:', error);
-                occupancyDisplay.textContent = 'Error loading data. Please try again.';
-            });
+        // Avoid division by zero and handle edge cases
+        if (totalSpots === 0) {
+            occupancyDisplay.textContent = 'No data available for the selected lot';
+        } else {
+            const occupancyPercentage = (occupiedSpots / totalSpots) * 100;
+            occupancyDisplay.textContent = `Occupancy Percentage: ${occupancyPercentage.toFixed(2)}%`;
+        }
     });
 });

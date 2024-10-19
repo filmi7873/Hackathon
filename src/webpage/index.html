@@ -10,21 +10,24 @@
     <div class="container">
         <h1>Parking Lot Occupancy</h1>
         <label for="parking-lot-select">Select Parking Lot:</label>
-        <select id="parking-lot-select"> <!-- Updated ID here -->
+        <select id="parking-lot-select">
             <option value="">-- Select a Parking Lot --</option>
             <option value="1">Parking Lot 1</option>
             <option value="2">Parking Lot 2</option>
             <option value="3">Parking Lot 3</option>
-            <option value="4">Parking Lot 4</option>
-            <option value="5">Parking Lot 5</option>
         </select>
 
         <div class="occupancy">
             <h2>Occupancy Percentage:</h2>
-            <p id="occupancy-display">N/A</p> <!-- Updated ID here -->
+            <p id="occupancy-display">N/A</p> <!-- Display the calculated occupancy -->
+        </div>
+
+        <div class="details">
+            <h2>Occupied Spots:</h2>
+            <ul id="occupied-spots-list"></ul> <!-- List of occupied spots -->
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="script.js"></script> <!-- Link to the external JS file -->
 </body>
 </html>
