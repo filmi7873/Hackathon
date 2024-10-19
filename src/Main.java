@@ -75,6 +75,7 @@ public class Main {
         String csvLot1 = "lot1_parking.csv"; 
         String csvLot2 = "lot2_parking.csv"; 
         String csvLot3 = "lot3_parking.csv"; 
+        LotManager lotManager = new LotManager();
 
         updateCSV(csvLot1); // Generate the initial CSV file
         updateRandomSpots(csvLot1); // Update random spots in the CSV file
@@ -84,5 +85,7 @@ public class Main {
 
         updateCSV(csvLot3); // Generate the initial CSV file
         updateRandomSpots(csvLot3); // Update random spots in the CSV file
+
+        lotManager.programStart();
     }
 }
