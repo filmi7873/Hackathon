@@ -3,10 +3,13 @@ import java.util.PriorityQueue;
 import java.util.Scanner;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 
@@ -22,6 +25,7 @@ public class LotManager {
             // false (empty) should be "less than" true (taken)
         }
     }
+    
 
     public LotManager() {
         parkingQueue = new PriorityQueue<>(new ParkingSpotsOccupancy());     
@@ -32,7 +36,7 @@ public class LotManager {
         parkingQueue.add(newSpot);
     }
 
-    public void listEmptySpots() {
+    public void listEmptySpots(String parkingLot) {
         PriorityQueue<ParkingSpot> tempQueue = new PriorityQueue<>(parkingQueue);
         ArrayList<Integer> emptySpots = new ArrayList<>();
     
@@ -50,7 +54,7 @@ public class LotManager {
         // Sort the empty spots for organized output
         emptySpots.sort(Integer::compareTo);
         
-        System.out.println("Number of Empty Spots: " + emptySpots.size());
+        System.out.println("Number of Empty Spots for "+ parkingLot + ": "+  emptySpots.size());
         for (Integer spotNum : emptySpots) {
             System.out.println("Spot # " + spotNum + " is empty.");
         }
@@ -67,9 +71,9 @@ public class LotManager {
         addSpot(weightedSensor, takenSpot, indicatorLight, parkingSpotNum);
     }
 
-    public void programStart() {
+    public void programStart(String parkingLot) {
         Integer weightedSensor, parkingSpotNum;
-        String csvFile = "lot1_parking.csv"; // Path to your CSV file
+        String csvFile = parkingLot; // Path to your CSV file
         String line;
         String csvSplitBy = ",";
 
@@ -90,7 +94,8 @@ public class LotManager {
             e.printStackTrace(); 
         }
 
-        listEmptySpots(); // After reading the file, list all empty spots
+        listEmptySpots(parkingLot); // After reading the file, list all empty spots
+        parkingQueue.clear(); 
     }
 }
 

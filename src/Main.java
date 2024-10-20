@@ -3,6 +3,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 public class Main {
 
@@ -86,6 +89,31 @@ public class Main {
         updateCSV(csvLot3); // Generate the initial CSV file
         updateRandomSpots(csvLot3); // Update random spots in the CSV file
 
-        lotManager.programStart();
+        lotManager.programStart(csvLot1);
+        lotManager.programStart(csvLot2);
+        lotManager.programStart(csvLot3);
+        Timer timer = new Timer();
+TimerTask task = new TimerTask() {
+    @Override
+    public void run() {
+        try {
+            updateRandomSpots(csvLot1); // Update random spots in the CSV file
+
+            updateRandomSpots(csvLot2); // Update random spots in the CSV file
+
+            updateCSV(csvLot3); // Generate the initial CSV file
+            updateRandomSpots(csvLot3); // Update random spots in the CSV file
+
+            // Call the programStart method to process the updated CSV
+            lotManager.programStart(csvLot1);
+            lotManager.programStart(csvLot2);
+            lotManager.programStart(csvLot3);
+        } catch (IOException e) {
+            e.printStackTrace();  // Handle any IO exceptions
+        }
+    }
+    
+};
+timer.scheduleAtFixedRate(task, 0, 5000);
     }
 }
