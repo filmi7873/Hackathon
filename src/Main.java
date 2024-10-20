@@ -101,7 +101,6 @@ TimerTask task = new TimerTask() {
 
             updateRandomSpots(csvLot2); // Update random spots in the CSV file
 
-            updateCSV(csvLot3); // Generate the initial CSV file
             updateRandomSpots(csvLot3); // Update random spots in the CSV file
 
             // Call the programStart method to process the updated CSV
