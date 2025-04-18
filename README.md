@@ -1,18 +1,31 @@
-## Getting Started
+# Hackathon Web App
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+A full-stack web application developed in 48 hours during my first hackathon. This project was built by a team of four women of color, and I led the architecture, UI layout, and live demo delivery.
 
-## Folder Structure
+## Project Overview
 
-The workspace contains two folders by default, where:
+This web app was designed and developed under tight time constraints to showcase team collaboration, backend system design, and interface responsiveness.
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+## Features
+- **Full-stack implementation** using Java (backend) and HTML/CSS/JavaScript (frontend)
+- **User authentication**, **form handling**, and **dynamic content display**
+- RESTful routing and server-side logic handled in Java
+- Fully functional UI with interactive features for users
+- Responsive layout compatible with desktop and mobile
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+## Technologies Used
+- **Java** – Server-side logic and backend functionality
+- **HTML & CSS** – Page structure and styling
+- **JavaScript** – Client-side interactivity
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+## My Role
+- Architected the app’s backend logic and request flow
+- Designed and implemented the user interface layout
+- Led the team’s demo presentation to judges
+- Helped integrate frontend and backend under time pressure
 
-## Dependency Management
+## How to Run
+1. Clone the repo:
+   ```bash
+   git clone https://github.com/filmi7873/Hackathon.git
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
